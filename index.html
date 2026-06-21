@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grid Image Cutter</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <h1>Grid Image Cutter</h1>
+            <p>이미지를 올리고 행/열 분할선을 조정한 뒤 조각별 이미지나 ZIP으로 저장하세요.</p>
+          </div>
+          <label class="upload-button">
+            <input id="fileInput" type="file" accept="image/*" />
+            이미지 선택
+          </label>
+        </header>
+
+        <section class="preview-stage" aria-label="이미지 커팅 미리보기">
+          <div id="dropZone" class="drop-zone">
+            <div class="empty-state">
+              <strong>이미지를 선택하거나 이곳에 끌어다 놓으세요</strong>
+              <span>PNG, JPG, WebP 등 브라우저가 읽을 수 있는 이미지 파일을 지원합니다.</span>
+            </div>
+            <div id="previewWrap" class="preview-wrap" hidden>
+              <canvas id="previewCanvas"></canvas>
+              <div id="overlay" class="grid-overlay"></div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <aside class="controls" aria-label="분할 설정">
+        <section class="panel">
+          <h2>분할</h2>
+          <div class="control-grid">
+            <label>
+              행
+              <input id="rowsInput" type="number" min="1" max="30" value="3" />
+            </label>
+            <label>
+              열
+              <input id="colsInput" type="number" min="1" max="30" value="3" />
+            </label>
+          </div>
+          <button id="resetLinesButton" class="secondary-button" type="button">균등 분할로 재설정</button>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <h2>분할선</h2>
+            <div class="segmented" role="tablist" aria-label="분할선 종류">
+              <button id="horizontalTab" class="active" type="button" role="tab">가로</button>
+              <button id="verticalTab" type="button" role="tab">세로</button>
+            </div>
+          </div>
+          <div id="lineEditor" class="line-editor"></div>
+          <p id="lineHint" class="hint">분할선을 마우스로 드래그하거나 값을 입력해 조정하세요.</p>
+        </section>
+
+        <section class="panel">
+          <h2>다운로드</h2>
+          <div class="download-actions">
+            <button id="downloadZipButton" class="primary-button" type="button" disabled>전체 ZIP 다운로드</button>
+            <button id="downloadSelectedButton" class="secondary-button" type="button" disabled>선택 조각 다운로드</button>
+          </div>
+          <p id="imageMeta" class="meta">이미지를 선택하면 원본 크기와 조각 수가 표시됩니다.</p>
+        </section>
+      </aside>
+
+      <section class="pieces-panel" aria-label="잘린 이미지 목록">
+        <div class="pieces-heading">
+          <h2>잘린 이미지</h2>
+          <span id="piecesCount">0개</span>
+        </div>
+        <div id="piecesGrid" class="pieces-grid"></div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
